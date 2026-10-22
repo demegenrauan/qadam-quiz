@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="kk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#111a35">
+<title>Qadam — Тікелей квиз</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/peerjs/1.5.4/peerjs.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<style>
+:root{--navy:#111a35;--navy2:#1b2850;--cream:#f5efdf;--paper:#fffaf0;--sand:#e8dcc4;--ink:#202742;--muted:#9ba7c3;--gold:#efc779;--green:#8bd1af;--red:#f08a89;--shadow:0 24px 70px #080e20aa}
+*{box-sizing:border-box}html{min-height:100%;background:var(--navy)}body{margin:0;min-height:100vh;color:var(--cream);font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;background:radial-gradient(ellipse at 15% 0%,#27365e 0,transparent 42%),radial-gradient(ellipse at 100% 100%,#202c4c 0,transparent 38%),var(--navy)}button,input{font:inherit}button{cursor:pointer;border:0}.shell{width:min(1240px,calc(100% - 40px));margin:auto;padding:26px 0 54px}.topbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:30px}.brand{display:flex;align-items:center;gap:12px;font-weight:850;letter-spacing:.04em;font-size:18px}.brand-mark{display:grid;place-items:center;width:38px;height:38px;border-radius:13px;color:var(--navy);background:var(--gold);font-size:18px;box-shadow:0 7px 25px #efc77944}.tag{color:#c2cbe0;font-size:13px;letter-spacing:.12em;text-transform:uppercase}.pill{display:inline-flex;align-items:center;gap:8px;border:1px solid #ffffff20;background:#ffffff0b;border-radius:999px;padding:9px 14px;color:#d9e0f0;font-size:13px}.dot{width:8px;height:8px;border-radius:50%;background:var(--green);box-shadow:0 0 12px #8bd1af99}.layout{display:grid;grid-template-columns:minmax(0,1.55fr) minmax(270px,.8fr);gap:22px;align-items:stretch}.card{border:1px solid #ffffff15;border-radius:25px;background:#fffaf00a;backdrop-filter:blur(18px);box-shadow:var(--shadow)}.main-card{min-height:550px;padding:clamp(24px,4vw,48px);display:flex;flex-direction:column;justify-content:center}.side-card{padding:26px;background:var(--cream);color:var(--ink);border:0}.eyebrow{font-size:12px;text-transform:uppercase;letter-spacing:.17em;color:var(--gold);font-weight:800;margin:0 0 12px}.side-card .eyebrow{color:#8d7650}.title{font-size:clamp(36px,5vw,66px);line-height:1.04;letter-spacing:-.045em;margin:0 0 16px;max-width:820px}.sub{color:#bec8dc;line-height:1.65;font-size:17px;max-width:680px;margin:0 0 28px}.side-card .sub{color:#6b7080;font-size:14px}.actions{display:flex;gap:12px;flex-wrap:wrap;align-items:center}.btn{padding:15px 21px;border-radius:14px;font-weight:800;transition:transform .18s,filter .18s,box-shadow .18s}.btn:hover{transform:translateY(-2px);filter:brightness(1.04)}.btn-primary{background:var(--gold);color:#29253a;box-shadow:0 9px 24px #efc77924}.btn-light{background:var(--paper);color:var(--ink)}.btn-ghost{background:#ffffff12;color:var(--cream);border:1px solid #ffffff22}.btn:disabled{opacity:.48;cursor:not-allowed;transform:none}.steps{display:grid;gap:13px;margin-top:25px}.step{display:flex;gap:12px;align-items:flex-start;color:#39425d;font-size:14px;line-height:1.5}.step-num{flex:0 0 26px;height:26px;display:grid;place-items:center;border-radius:9px;background:#e9dfc9;color:#635742;font-weight:800}.room-code{font-size:35px;letter-spacing:.13em;font-weight:900;color:var(--ink);margin:4px 0 12px}.qr-wrap{width:170px;height:170px;padding:9px;background:#fff;border-radius:15px;display:grid;place-items:center;margin:18px auto}.qr-wrap img,.qr-wrap canvas{max-width:100%;max-height:100%}.join-url{font-size:11px;color:#8b8d98;overflow-wrap:anywhere;text-align:center}.section-title{font-size:16px;margin:25px 0 12px;font-weight:850}.roster{display:grid;gap:8px;max-height:260px;overflow:auto}.person{display:flex;justify-content:space-between;align-items:center;padding:11px 13px;border-radius:13px;background:#fff9eb;font-size:14px}.ready{font-size:11px;color:#487a60;font-weight:800}.waiting{font-size:11px;color:#a09377;font-weight:800}.empty{color:#9295a0;font-size:13px;line-height:1.55;padding:12px 0}.progress-line{height:8px;background:#dcd4c4;border-radius:8px;overflow:hidden;margin-top:8px}.progress-fill{height:100%;background:#86bda0;transition:width .35s}.join-form{display:grid;gap:13px;max-width:480px}.field{width:100%;padding:17px 18px;border:1px solid #ffffff28;border-radius:14px;background:#ffffff0d;color:white;outline:none}.field:focus{border-color:var(--gold);box-shadow:0 0 0 3px #efc77922}.field::placeholder{color:#8f9ab4}.question-top{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:18px}.counter{color:#cad3e6;font-weight:800}.timer{display:grid;place-items:center;min-width:56px;height:56px;border:2px solid #ffffff28;border-radius:50%;font-size:21px;font-weight:900;color:var(--gold)}.timer.low{color:var(--red);border-color:var(--red);animation:pulse .7s infinite alternate}.question{font-size:clamp(26px,3.7vw,48px);line-height:1.16;letter-spacing:-.03em;margin:10px 0 25px}.answers{display:grid;grid-template-columns:1fr 1fr;gap:12px}.answer{display:flex;text-align:left;align-items:center;gap:13px;min-height:72px;padding:16px;border:1px solid #ffffff1c;border-radius:16px;background:#fffaf014;color:var(--cream);font-weight:750;font-size:clamp(15px,1.6vw,20px);transition:.2s}.answer:hover{background:#fffaf025;transform:translateY(-2px)}.answer.chosen{border-color:var(--gold);background:#efc77924}.answer.correct{border-color:var(--green);background:#8bd1af25}.answer.wrong{opacity:.48}.answer-key{display:grid;place-items:center;flex:0 0 35px;height:35px;border-radius:11px;background:#ffffff17;font-size:15px;color:#e4d7ba}.answer-note{margin-top:17px;color:#cad3e6;font-size:14px}.host-tools{display:flex;gap:10px;flex-wrap:wrap;margin-top:20px}.bar{height:9px;border-radius:10px;background:#ffffff18;margin:4px 0 24px;overflow:hidden}.bar>i{display:block;height:100%;background:var(--gold);border-radius:10px;transition:width .25s}.leader-list{display:grid;gap:9px;margin:15px 0}.leader{display:flex;justify-content:space-between;align-items:center;padding:13px 16px;border-radius:14px;background:#ffffff10;font-size:16px}.leader:first-child{background:#efc77922}.rank{color:var(--gold);font-weight:900;margin-right:12px}.score{font-weight:900;color:var(--gold)}.cloud{min-height:240px;display:flex;flex-wrap:wrap;gap:11px 17px;justify-content:center;align-items:center;padding:22px 0}.cloud-word{font-weight:900;line-height:1;animation:float 3s ease-in-out infinite alternate;color:var(--gold)}.cloud-word:nth-child(3n){color:#d9e5f4}.cloud-word:nth-child(3n+1){color:#a7d9bf}.cloud-word:nth-child(4n){color:#f3c7b4}.status{padding:13px 15px;border-radius:13px;background:#ffffff10;color:#d2d9e8;font-size:14px;line-height:1.5;margin-top:18px}.status.good{background:#8bd1af18;color:#bcebd1}.status.bad{background:#f08a8918;color:#ffd0cc}.small{font-size:12px;color:#aab4cb;line-height:1.5}.side-white{background:var(--paper);border-radius:17px;padding:17px;margin-top:17px}.side-white .section-title{margin:0 0 10px}.mobile-shell{width:min(700px,calc(100% - 28px));margin:auto;padding:18px 0 36px}.mobile-shell .main-card{min-height:unset;padding:25px 20px}.mobile-shell .title{font-size:34px}.mobile-shell .question{font-size:27px}.mobile-shell .answers{grid-template-columns:1fr}.mobile-shell .answer{min-height:60px}.mobile-shell .layout{grid-template-columns:1fr}.mobile-shell .side-card{display:none}.ready-button{width:100%;min-height:62px;font-size:18px}.footer{margin-top:25px;text-align:center;color:#73809f;font-size:12px}.hidden{display:none!important}.toast{position:fixed;left:50%;bottom:20px;transform:translate(-50%,20px);opacity:0;pointer-events:none;background:#fffaf0;color:#1c2542;padding:12px 18px;border-radius:12px;box-shadow:var(--shadow);transition:.25s;z-index:9}.toast.show{opacity:1;transform:translate(-50%,0)}@keyframes pulse{to{transform:scale(1.06)}}@keyframes float{to{transform:translateY(-9px) rotate(2deg)}}@media(max-width:850px){.layout{grid-template-columns:1fr}.main-card{min-height:470px}.side-card{order:-1}.side-card .desktop-only{display:none}}@media(max-width:560px){.shell{width:calc(100% - 24px);padding-top:15px}.topbar{margin-bottom:17px}.tag{display:none}.layout{gap:12px}.main-card{padding:23px 19px;min-height:420px}.side-card{padding:20px}.answers{grid-template-columns:1fr}.question{font-size:29px}.answer{min-height:60px}.room-code{font-size:29px}}
+</style>
+</head>
+<body>
+<div id="app"></div><div class="toast" id="toast"></div>
+<script>
+const quizData = [
+  {
+    id: 1,
+    type: "choice",
+    question: "for (int i = 0; i < 5; i++) циклі неше рет орындалады?",
+    options: ["4", "5", "6", "0"],
+    correctAnswer: 1 // "5"
+  },
+  {
+    id: 2,
+    type: "choice",
+    question: "int – мәндік (бүтін) тип пе, сілтемелік пе?",
+    options: ["бүтін тип", "сілтемелік тип", "логикалық тип", "қалқымалы нүктелі тип"],
+    correctAnswer: 0 // "бүтін тип"
+  },
+  {
+    id: 3,
+    type: "choice",
+    question: "string – бүтін тип пе, сілтемелік тип пе?",
+    options: ["бүтін тип", "сілтемелік тип", "символдық тип", "бос тип (void)"],
+    correctAnswer: 1 // "сілтемелік тип"
+  },
+  {
+    id: 4,
+    type: "choice",
+    question: "Сөз бұлты: «Массив» десе не елестетесіз?",
+    options: ["Тізбектелген ұяшықтар", "Бір айнымалы", "Шексіз цикл", "Логикалық шарт"],
+    correctAnswer: 0 // "Тізбектелген ұяшықтар"
+  },
+  {
+    id: 5,
+    type: "wordcloud",
+    question: "Бағдарламалау сіз үшін не? (Бір сөзбен жазыңыз)",
+    placeholder: "Мұнда бір сөз енгізіңіз..."
+  }
+];
+
+const app = document.getElementById("app");
+const toastEl = document.getElementById("toast");
+let peer = null, host = false, room = "", playerId = "", playerName = "", hostConn = null;
+let connections = new Map(), players = {}, game = {phase:"lobby",index:0,deadline:0};
+let sentAnswer = false, timerTicker = null, soundCtx = null, qr = null;
+
+function esc(v){return String(v ?? "").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
+function toast(msg){toastEl.textContent=msg;toastEl.classList.add("show");setTimeout(()=>toastEl.classList.remove("show"),2400)}
+function beep(freq=550,duration=.09,type="sine",volume=.035){try{soundCtx ||= new (window.AudioContext||window.webkitAudioContext)();const o=soundCtx.createOscillator(),g=soundCtx.createGain();o.type=type;o.frequency.value=freq;g.gain.setValueAtTime(volume,soundCtx.currentTime);g.gain.exponentialRampToValueAtTime(.001,soundCtx.currentTime+duration);o.connect(g);g.connect(soundCtx.destination);o.start();o.stop(soundCtx.currentTime+duration)}catch(e){}}
+function fanfare(){[523,659,784,1047].forEach((f,i)=>setTimeout(()=>beep(f,.22,"triangle",.06),i*140))}
+function header(label){return '<div class="topbar"><div class="brand"><div class="brand-mark">Q</div><span>QADAM</span></div><div class="tag">Тікелей білім · Бірге үйренеміз</div><div class="pill"><span class="dot"></span>'+esc(label)+'</div></div>'}
+function shell(main,side="",mobile=false){document.body.classList.toggle("mobile",mobile);app.innerHTML='<div class="'+(mobile?"mobile-shell":"shell")+'">'+header(mobile?"Оқушы":"Мұғалім")+(side?'<div class="layout"><main class="card main-card">'+main+'</main><aside class="card side-card">'+side+'</aside></div>':'<main class="card main-card">'+main+'</main>')+'<div class="footer">QADAM · Тікелей квиз · Дыбыс браузерге байланысты</div></div>'}
+function baseUrl(){const u=new URL(location.href);u.searchParams.set("room",room);u.hash="";return u.toString()}
+function setRoomQuery(){const u=new URL(location.href);u.searchParams.set("room",room);history.replaceState({}, "",u)}
+function lobbySide(){const list=Object.values(players);const ready=list.filter(p=>p.ready).length;const ratio=list.length?Math.floor(ready/list.length*100):0;return '<p class="eyebrow">Сынып бөлмесі</p><div class="room-code">'+esc(room)+'</div><div class="small">Оқушылар QR кодты сканерлеп немесе сілтемені ашып қосылады.</div><div class="qr-wrap" id="qr"></div><div class="join-url">'+esc(baseUrl())+'</div><div class="section-title">Қатысушылар · '+list.length+'</div><div class="roster">'+(list.length?list.map(p=>'<div class="person"><span>'+esc(p.name)+'</span><span class="'+(p.ready?"ready":"waiting")+'">'+(p.ready?"ДАЙЫН":"КҮТУДЕ")+'</span></div>').join(""):'<div class="empty">Қатысушылар қосылған кезде осы жерде көрінеді.</div>')+'</div><div class="section-title">Дайындық · '+ratio+'%</div><div class="progress-line"><div class="progress-fill" style="width:'+ratio+'%"></div></div><p class="small">Қатысушылардың кемінде 80%-ы «Дайынмын» басқанда квиз автоматты басталады.</p><div class="desktop-only"><button class="btn btn-ghost" style="width:100%;margin-top:16px" onclick="toggleSound()">♫ Дыбысты қосу / өшіру</button></div>'}
+function renderHome(){shell('<p class="eyebrow">Мұғалім экраны · 5 сұрақ</p><h1 class="title">Сабаққа бірге<br>қосылайық.</h1><p class="sub">Интерактивті квизді бастаңыз. Оқушылар телефонындағы QR кодты сканерлеп, атын енгізіп, дайын екенін белгілейді.</p><div class="actions"><button class="btn btn-primary" id="createBtn" onclick="createRoom()">Бөлме ашу →</button></div><div id="homeStatus" class="status hidden"></div>', '<p class="eyebrow">Үш қадам</p><h2 style="font-size:24px;line-height:1.2;margin:0 0 6px">Жылдам бастау</h2><p class="sub">Сілтемені интернетке жариялап, проектордан ашыңыз.</p><div class="steps"><div class="step"><span class="step-num">1</span><span>«Бөлме ашу» түймесін басыңыз.</span></div><div class="step"><span class="step-num">2</span><span>QR кодты проекторға көрсетіңіз.</span></div><div class="step"><span class="step-num">3</span><span>Сыныптың 80%-ы дайын болғанда ойын өзі басталады.</span></div></div><div class="side-white"><div class="section-title">Қосылу үшін</div><div class="small">Барлық құрылғы интернетке қосылып, браузерде осы бет ашық тұруы керек.</div></div>');}
+function createRoom(){
+ if(!window.Peer){showHomeStatus("PeerJS кітапханасы жүктелмеді. Интернетке қосылып, бетті қайта ашыңыз.",true);return}
+ const btn=document.getElementById("createBtn");if(btn)btn.disabled=true;
+ room=Math.random().toString(36).slice(2,8).toUpperCase();
+ host=true;players={};game={phase:"lobby",index:0,deadline:0};
+ setRoomQuery();renderHost();
+ const peerId="qadam-"+room.toLowerCase();
+ peer=new Peer(peerId);
+ peer.on("open",()=>{document.getElementById("homeStatus")?.classList.add("hidden");drawQR();});
+ peer.on("connection",conn=>{connections.set(conn.peer,conn);conn.on("data",msg=>onHostMessage(conn,msg));conn.on("close",()=>{const p=players[conn.peer];if(p){delete players[conn.peer];publish();}});conn.on("error",()=>{});});
+ peer.on("error",err=>{if(err.type==="unavailable-id"){room=Math.random().toString(36).slice(2,8).toUpperCase();setRoomQuery();try{peer.destroy()}catch(e){}createRoom()}else showHostError("Бөлме ашылмады. Желіге қосылғанын тексеріп, қайта көріңіз.");});
+}
+function showHomeStatus(text,bad=false){const el=document.getElementById("homeStatus");if(el){el.textContent=text;el.className="status "+(bad?"bad":"");}}
+function renderHost(){const q=quizData[game.index]||quizData[0];let main="";
+ if(game.phase==="lobby"){main='<p class="eyebrow">Бөлме ашық · Қосылуды күтеміз</p><h1 class="title">Оқушыларды<br>қарсы алыңыз.</h1><p class="sub">Оқушылар қосылып, дайын болғанда квиз автоматты түрде басталады.</p><div class="status good">✓ Сілтеме мен QR код дайын. Қосылу күйі автоматты жаңарады.</div><div class="host-tools"><button class="btn btn-ghost" onclick="copyJoinLink()">Сілтемені көшіру</button></div>'}
+ else if(game.phase==="question"&&q.type==="choice"){main='<div class="question-top"><span class="counter">СҰРАҚ '+(game.index+1)+' / '+quizData.length+'</span><div class="timer" id="timer">15</div></div><div class="bar"><i style="width:'+((game.index+1)/quizData.length*100)+'%"></i></div><h1 class="question">'+esc(q.question)+'</h1><div class="answers">'+q.options.map((x,i)=>'<div class="answer"><span class="answer-key">'+String.fromCharCode(65+i)+'</span>'+esc(x)+'</div>').join("")+'</div><div class="answer-note">Жауап бергендер: '+Object.values(players).filter(p=>p.answer!==undefined).length+' / '+Object.keys(players).length+'</div>'}
+ else if(game.phase==="reveal"&&q.type==="choice"){main='<p class="eyebrow">Дұрыс жауап</p><h1 class="question">'+esc(q.question)+'</h1><div class="answers">'+q.options.map((x,i)=>'<div class="answer '+(i===q.correctAnswer?"correct":"wrong")+'"><span class="answer-key">'+String.fromCharCode(65+i)+'</span>'+esc(x)+(i===q.correctAnswer?" ✓":"")+'</div>').join("")+'</div><div class="answer-note">Жауап бергендер: '+Object.values(players).filter(p=>p.answer!==undefined).length+' / '+Object.keys(players).length+'</div><div class="host-tools"><button class="btn btn-primary" onclick="nextQuestion()">Келесі сұрақ →</button></div>'}
+ else if(game.phase==="question"&&q.type==="wordcloud"){main='<div class="question-top"><span class="counter">СҰРАҚ '+(game.index+1)+' / '+quizData.length+'</span><div class="timer" id="timer">30</div></div><div class="bar"><i style="width:100%"></i></div><h1 class="question">'+esc(q.question)+'</h1>'+renderCloud()+'<div class="answer-note">Сөз жібергендер: '+Object.values(players).filter(p=>p.answer!==undefined).length+' / '+Object.keys(players).length+'</div><div class="host-tools"><button class="btn btn-primary" onclick="revealWordCloud()">Нәтижені көрсету</button></div>'}
+ else if(game.phase==="reveal"&&q.type==="wordcloud"){main='<p class="eyebrow">Сыныптың сөз бұлты</p><h1 class="question">'+esc(q.question)+'</h1>'+renderCloud()+'<div class="host-tools"><button class="btn btn-primary" onclick="nextQuestion()">Қорытынды →</button></div>'}
+ else {main='<p class="eyebrow">Квиз аяқталды</p><h1 class="title">Жарайсыңдар!</h1><p class="sub">Бүгінгі квиздің нәтижелері.</p>'+renderLeaderboard()+'<div class="host-tools"><button class="btn btn-primary" onclick="restartQuiz()">Қайта бастау</button></div>'}
+ shell(main,lobbySide());
+ if(game.phase==="lobby"){drawQR()}
+ if(game.phase==="question")startTicker();
+}
+function drawQR(){const el=document.getElementById("qr");if(el&&window.QRCode){el.innerHTML="";new QRCode(el,{text:baseUrl(),width:150,height:150,colorDark:"#17213e",colorLight:"#ffffff",correctLevel:QRCode.CorrectLevel.M})}}
+function showHostError(msg){const el=document.querySelector(".main-card .status");if(el){el.textContent=msg;el.className="status bad"}else toast(msg)}
+function copyJoinLink(){navigator.clipboard?.writeText(baseUrl()).then(()=>toast("Сілтеме көшірілді")).catch(()=>toast(baseUrl()))}
+function toggleSound(){beep(680,.14,"triangle",.07)}
+function onHostMessage(conn,msg){
+ if(!msg||typeof msg!=="object")return;
+ if(msg.type==="join"){
+  if(game.phase!=="lobby"){conn.send({type:"closed"});return}
+  const name=String(msg.name||"Қатысушы").trim().slice(0,24)||"Қатысушы";
+  const existing=Object.values(players).some(p=>p.name.toLocaleLowerCase()===name.toLocaleLowerCase());
+  players[conn.peer]={name:existing?name+" · "+(Object.keys(players).length+1):name,ready:false,score:0};
+  conn.send({type:"welcome",playerId:conn.peer,name:players[conn.peer].name});
+  beep(720,.09);publish();return
+ }
+ const p=players[conn.peer];if(!p)return;
+ if(msg.type==="ready"&&game.phase==="lobby"){p.ready=!!msg.ready;publish();const arr=Object.values(players);if(arr.length&&arr.filter(x=>x.ready).length/arr.length>=.8)startQuiz();return}
+ if(msg.type==="answer"&&game.phase==="question"){
+  const q=quizData[game.index];
+  if(q.type==="choice"&&Number.isInteger(Number(msg.value))&&Number(msg.value)>=0&&Number(msg.value)<q.options.length){p.answer=Number(msg.value);p.answerAt=Date.now();publish();return}
+  if(q.type==="wordcloud"&&typeof msg.value==="string"){p.answer=msg.value.trim().replace(/\s+/g," ").slice(0,32);p.answerAt=Date.now();publish();return}
+ }
+}
+function snapshot(){return{game:{phase:game.phase,index:game.index,deadline:game.deadline},players:Object.entries(players).map(([id,p])=>({id,name:p.name,ready:p.ready,score:p.score,answer:p.answer})),serverNow:Date.now()}}
+function publish(){if(host){const data=snapshot();connections.forEach(c=>{if(c.open)try{c.send({type:"state",data})}catch(e){}});renderHost()}}
+function startQuiz(){if(game.phase!=="lobby")return;game={phase:"question",index:0,deadline:Date.now()+15000};Object.values(players).forEach(p=>{p.answer=undefined});fanfare();publish()}
+function startTicker(){clearInterval(timerTicker);const update=()=>{const el=document.getElementById("timer");if(!el)return;const left=Math.max(0,Math.ceil((game.deadline-Date.now())/1000));el.textContent=left;el.classList.toggle("low",left<=5);if(left<=5&&left>0)beep(460,.05,"sine",.018);if(left===0&&game.phase==="question"){if(quizData[game.index].type==="wordcloud")revealWordCloud();else revealAnswer()}};update();timerTicker=setInterval(update,500)}
+function revealAnswer(){if(game.phase!=="question")return;const q=quizData[game.index];Object.values(players).forEach(p=>{if(Number(p.answer)===q.correctAnswer){const elapsed=Math.max(0,game.deadline-(p.answerAt||game.deadline));p.score+=1000+Math.round(elapsed/100)}});game.phase="reveal";game.deadline=0;clearInterval(timerTicker);beep(740,.18,"triangle",.05);publish()}function revealWordCloud(){if(game.phase!=="question")return;game.phase="reveal";game.deadline=0;clearInterval(timerTicker);publish()}
+function nextQuestion(){if(game.index>=quizData.length-1){game.phase="finished";fanfare();publish();return}game.index++;game.phase="question";game.deadline=Date.now()+(quizData[game.index].type==="wordcloud"?30000:15000);Object.values(players).forEach(p=>{delete p.answer});publish()}
+function restartQuiz(){game={phase:"question",index:0,deadline:Date.now()+15000};Object.values(players).forEach(p=>{p.score=0;delete p.answer});publish()}
+function renderLeaderboard(){const rows=Object.values(players).sort((a,b)=>b.score-a.score);return '<div class="leader-list">'+(rows.length?rows.map((p,i)=>'<div class="leader"><span><span class="rank">'+(i+1)+'.</span>'+esc(p.name)+'</span><span class="score">'+p.score+'</span></div>').join(""):'<div class="empty">Қатысушылар жоқ.</div>')+'</div>'}
+function renderCloud(){const words={};Object.values(players).forEach(p=>{if(typeof p.answer==="string"){const word=p.answer.trim();if(word)words[word]=(words[word]||0)+1}});const entries=Object.entries(words).sort((a,b)=>b[1]-a[1]);if(!entries.length)return '<div class="cloud"><span class="small">Сөздер келген сайын бұлт жаңарып отырады…</span></div>';const max=Math.max(...entries.map(x=>x[1]));return '<div class="cloud">'+entries.map(([w,n],i)=>'<span class="cloud-word" style="font-size:'+Math.round(19+35*n/max)+'px;animation-delay:'+(i%7)*.15+'s">'+esc(w)+(n>1?' <small style="font-size:.45em">×'+n+'</small>':'')+'</span>').join("")+'</div>'}
+function renderStudent(state){
+ const g=state.game,q=quizData[g.index]||quizData[0],me=state.players.find(p=>p.id===playerId)||{};
+ let main="";
+ if(g.phase==="lobby"){const ready=!!me.ready;main='<p class="eyebrow">Бөлме '+esc(room)+'</p><h1 class="title">Сәлем,<br>'+esc(playerName)+'!</h1><p class="sub">Мұғалім квизді бастағанша күтіңіз. Дайын болсаңыз, түймені басыңыз.</p><button class="btn btn-primary ready-button" onclick="sendReady('+(!ready)+')">'+(ready?"✓ Дайынмын · бас тарту":"Дайынмын")+'</button><div class="status">Сыныпта '+state.players.length+' қатысушы · '+state.players.filter(p=>p.ready).length+' дайын. 80% жиналғанда ойын автоматты басталады.</div>'}
+ else if(g.phase==="question"){
+  const answered=me.answer!==undefined;
+  main='<div class="question-top"><span class="counter">'+(g.index+1)+' / '+quizData.length+'</span><div class="timer" id="timer">'+Math.max(0,Math.ceil((g.deadline-Date.now())/1000))+'</div></div><div class="bar"><i style="width:'+((g.index+1)/quizData.length*100)+'%"></i></div><h1 class="question">'+esc(q.question)+'</h1>';
+  if(q.type==="choice")main+='<div class="answers">'+q.options.map((x,i)=>'<button type="button" class="answer '+(String(me.answer)===String(i)?"chosen":"")+'" onclick="sendAnswer('+i+')"><span class="answer-key">'+String.fromCharCode(65+i)+'</span>'+esc(x)+'</button>').join("")+'</div>';
+  else main+='<form class="join-form" onsubmit="submitWord(event)"><input class="field" id="wordInput" maxlength="32" autocomplete="off" placeholder="'+esc(q.placeholder)+'" '+(answered?"disabled":"")+' required><button class="btn btn-primary ready-button" '+(answered?"disabled":"")+'>'+(answered?"Жауап жіберілді ✓":"Жіберу →")+'</button></form>';  main+='<div class="status '+(answered?"good":"")+'">'+(answered?"Таңдауыңыз сақталды. Таймер аяқталғанша өзгерте аласыз.":"Жауапты уақыт біткенше өзгерте аласыз.")+'</div>'
+ }
+ else if(g.phase==="reveal"&&q.type==="choice"){const correct=me.answer!==undefined&&Number(me.answer)===q.correctAnswer;main='<p class="eyebrow">Дұрыс жауап</p><h1 class="question">'+esc(q.question)+'</h1><div class="status '+(correct?"good":"bad")+'">'+(me.answer===undefined?"Бұл сұраққа жауап бермедіңіз.":(correct?"Дұрыс! Жарайсыз.":"Келесі жолы сәттілік!"))+'</div><div class="side-white"><div class="section-title">Қазіргі ұпайыңыз</div><strong style="font-size:28px">'+(me.score||0)+'</strong></div><p class="sub">Мұғалім келесі сұраққа өткенше күтіңіз.</p>'}
+ else if(g.phase==="question"&&q.type==="wordcloud"){main='<p class="eyebrow">Сөз бұлты</p><h1 class="question">'+esc(q.question)+'</h1><div class="cloud">'+state.players.filter(p=>typeof p.answer==="string").map((p,i)=>'<span class="cloud-word" style="font-size:25px">'+esc(p.answer)+'</span>').join("")+'</div><p class="sub">Кластағы сөздер: '+state.players.filter(p=>typeof p.answer==="string").length+'</p>'}
+ else if(g.phase==="reveal"&&q.type==="wordcloud"){main='<p class="eyebrow">Сыныптың сөз бұлты</p><h1 class="question">'+esc(q.question)+'</h1><div class="cloud">'+state.players.filter(p=>typeof p.answer==="string").map(p=>'<span class="cloud-word" style="font-size:25px">'+esc(p.answer)+'</span>').join("")+'</div><p class="sub">Квиз аяқталуға жақын. Мұғалім нәтижені көрсетеді.</p>'}
+ else {main='<p class="eyebrow">Квиз аяқталды</p><h1 class="title">Жарайсың,<br>'+esc(playerName)+'!</h1><div class="side-white"><div class="section-title">Сіздің нәтижеңіз</div><strong style="font-size:34px">'+(me.score||0)+' ұпай</strong></div>'+renderLeaderboardFromState(state)}
+ shell(main,"",true);if(g.phase==="question")startStudentTicker(g.deadline)
+}
+function renderLeaderboardFromState(state){return '<div class="leader-list">'+state.players.slice().sort((a,b)=>b.score-a.score).map((p,i)=>'<div class="leader"><span><span class="rank">'+(i+1)+'.</span>'+esc(p.name)+'</span><span class="score">'+p.score+'</span></div>').join("")+'</div>'}
+let latestState=null;
+function startStudentTicker(deadline){clearInterval(timerTicker);const update=()=>{const el=document.getElementById("timer");if(!el)return;const left=Math.max(0,Math.ceil((deadline-Date.now())/1000));el.textContent=left;el.classList.toggle("low",left<=5)};update();timerTicker=setInterval(update,500)}
+function sendReady(value){if(hostConn?.open)hostConn.send({type:"ready",ready:value});beep(590,.08)}
+function sendAnswer(value){if(hostConn?.open){hostConn.send({type:"answer",value});sentAnswer=true;beep(640,.08)}}
+function submitWord(e){e.preventDefault();const input=document.getElementById("wordInput");const word=input?.value.trim().replace(/\s+/g," ");if(!word)return;sendAnswer(word);if(input){input.disabled=true;input.parentElement.querySelector("button").disabled=true;input.parentElement.querySelector("button").textContent="Жауап жіберілді ✓"}}
+function joinRoom(name){
+ if(!window.Peer){document.getElementById("joinStatus").textContent="PeerJS жүктелмеді. Интернетті тексеріп, бетті жаңартыңыз.";return}
+ playerName=name.trim().slice(0,24);playerId="p-"+Math.random().toString(36).slice(2,10);
+ const peerName="qadam-"+room.toLowerCase();
+ peer=new Peer();
+ peer.on("open",()=>{hostConn=peer.connect(peerName,{reliable:true});hostConn.on("open",()=>hostConn.send({type:"join",name:playerName}));hostConn.on("data",msg=>{if(msg.type==="welcome"){playerId=msg.playerId;playerName=msg.name;toast("Сіз бөлмеге қосылдыңыз")}else if(msg.type==="state"){latestState=msg.data;renderStudent(latestState)}else if(msg.type==="closed"){toast("Квиз басталып кетті. Мұғалімнен көмек сұраңыз.")}});hostConn.on("error",()=>joinError());hostConn.on("close",()=>toast("Байланыс үзілді. Бетті жаңартып көріңіз."))});
+ peer.on("error",()=>joinError())
+}
+function joinError(){const el=document.getElementById("joinStatus");if(el)el.textContent="Бөлмеге қосыла алмадық. QR кодты қайта сканерлеңіз немесе мұғалімнен сұраңыз."}
+function renderJoin(){
+ shell('<p class="eyebrow">Оқушы · Бөлме '+esc(room)+'</p><h1 class="title">Квизге<br>қосылыңыз.</h1><p class="sub">Өзіңізге ат таңдаңыз. Мұғалім экранында атыңыз көрінеді.</p><form class="join-form" id="joinForm"><input id="nameInput" class="field" maxlength="24" placeholder="Атыңыз немесе никнейм" autocomplete="nickname" required><button class="btn btn-primary ready-button">Қосылу →</button></form><div id="joinStatus" class="status hidden"></div><p class="small" style="margin-top:18px">Байланыс үзіліп қалса, QR кодты қайта сканерлеңіз.</p>',"",true);
+ document.getElementById("joinForm").addEventListener("submit",e=>{e.preventDefault();const name=document.getElementById("nameInput").value;if(!name.trim())return;document.getElementById("joinStatus").classList.remove("hidden");document.getElementById("joinStatus").textContent="Бөлмеге қосылуда…";document.querySelector("#joinForm button").disabled=true;joinRoom(name)})
+}
+function boot(){
+ const params=new URLSearchParams(location.search);room=(params.get("room")||"").toUpperCase();
+ if(room){renderJoin()}else renderHome()
+}
+boot();
+</script>
+</body>
+</html>
+
+
+
+
